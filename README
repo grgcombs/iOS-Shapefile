@@ -1,0 +1,14 @@
+* iOS Shapefile is a proof of concept for reading/parsing ESRI shapefiles
+	and displaying the resulting shapes in MapKit.
+	
+* It's built on Pascal Brandt's intial Cocoa work at http://3dgeo.net/CocoaShapefile/CocoaShapefile.htm
+
+* My changes consist of removing dependency on garbage collection, and
+	a rudimentary sample app showing district polygons for the Texas Senate.
+	
+* This proof of concept doesn't take "holes" in polygons into consideration.
+
+* I've included an iOS targeted PROJ.4 framework.  To be honest, I don't know
+	where I initially found it.  However, I'm sure you can find another suitable
+	iOS version floating out there somewhere if you need to.  I haven't made 
+	any changes to it.

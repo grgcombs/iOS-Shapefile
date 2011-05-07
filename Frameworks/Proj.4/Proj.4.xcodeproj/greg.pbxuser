@@ -1,0 +1,112 @@
+// !$*UTF8*$!
+{
+	0867D690FE84028FC02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeSDKPreference = iphonesimulator4.2;
+		activeTarget = D2AAC07D0554694100DB518D /* Proj.4 */;
+		codeSenseManager = 37F6D0A5125B901E00457CAF /* Code sense */;
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					301,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 326496137;
+			PBXWorkspaceStateSaveDate = 326496137;
+		};
+		sourceControlManager = 37F6D0A4125B901E00457CAF /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	37F6D0A4125B901E00457CAF /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	37F6D0A5125B901E00457CAF /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	499E4CF610BA668100C39606 /* emess.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 403}}";
+			sepNavSelRange = "{89, 0}";
+			sepNavVisRange = "{59, 386}";
+		};
+	};
+	499E4D0110BA668100C39606 /* Makefile.in */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 10647}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 637}";
+		};
+	};
+	499E4D0A10BA668100C39606 /* org_proj4_Projections.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {677, 494}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{523, 478}";
+		};
+	};
+	499E4E3310BA671B00C39606 /* proj_config.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {558, 819}}";
+			sepNavSelRange = "{208, 0}";
+			sepNavVisRange = "{0, 535}";
+		};
+	};
+	AA747D9E0F9514B9006C5449 /* Proj_4_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {845, 210}}";
+			sepNavSelRange = "{126, 0}";
+			sepNavVisRange = "{0, 188}";
+		};
+	};
+	D2AAC07D0554694100DB518D /* Proj.4 */ = {
+		activeExec = 0;
+	};
+}

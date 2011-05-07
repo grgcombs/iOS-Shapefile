@@ -1,0 +1,302 @@
+// !$*UTF8*$!
+{
+	1D3623240D0F684500981E51 /* TestObjCShapefileAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 552}}";
+			sepNavSelRange = "{232, 0}";
+			sepNavVisRange = "{0, 1403}";
+		};
+	};
+	1D3623250D0F684500981E51 /* TestObjCShapefileAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1965, 1183}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1383}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* TestObjCShapefile */ = {
+		activeExec = 0;
+		executables = (
+			37A39037125A3F4500DD86BC /* TestObjCShapefile */,
+		);
+	};
+	28D7ACF60DDB3853001CB0EB /* TestObjCShapefileViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1133, 286}}";
+			sepNavSelRange = "{229, 0}";
+			sepNavVisRange = "{0, 431}";
+		};
+	};
+	28D7ACF70DDB3853001CB0EB /* TestObjCShapefileViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1097, 2743}}";
+			sepNavSelRange = "{1032, 0}";
+			sepNavVisRange = "{942, 1033}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 37A39037125A3F4500DD86BC /* TestObjCShapefile */;
+		activeSDKPreference = iphonesimulator4.2;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* TestObjCShapefile */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* TestObjCShapefile */,
+		);
+		breakpoints = (
+			37EC6ECE125AC51D009B360D /* TestObjCShapefileViewController.m:128 */,
+			37EC6F03125AC88C009B360D /* Shapefile.m:326 */,
+			373002F2125D156700627DB1 /* Shapefile.m:364 */,
+			37300355125D27F500627DB1 /* Shapefile.m:360 */,
+		);
+		codeSenseManager = 37A39048125A3F5000DD86BC /* Code sense */;
+		executables = (
+			37A39037125A3F4500DD86BC /* TestObjCShapefile */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					600,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					712,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					672,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 326495947;
+			PBXWorkspaceStateSaveDate = 326495947;
+		};
+		sourceControlManager = 37A39047125A3F5000DD86BC /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 552}}";
+			sepNavSelRange = "{141, 0}";
+			sepNavVisRange = "{0, 372}";
+		};
+	};
+	32CA4F630368D1EE00C91783 /* TestObjCShapefile_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 552}}";
+			sepNavSelRange = "{130, 0}";
+			sepNavVisRange = "{0, 203}";
+		};
+	};
+	373002F2125D156700627DB1 /* Shapefile.m:364 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 37A39058125A400A00DD86BC /* Shapefile.m */;
+		functionName = "-parsePolyline:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 364;
+		location = TestObjCShapefile;
+		modificationTime = 326496115.17215;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	37300355125D27F500627DB1 /* Shapefile.m:360 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 37A39058125A400A00DD86BC /* Shapefile.m */;
+		functionName = "-parsePolyline:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 360;
+		location = TestObjCShapefile;
+		modificationTime = 326496115.172165;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	3779D44A1375EA0A0024E6C7 /* planS01188_8pct.cpg */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 552}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 5}";
+		};
+	};
+	37A39037125A3F4500DD86BC /* TestObjCShapefile */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = TestObjCShapefile;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	37A39047125A3F5000DD86BC /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	37A39048125A3F5000DD86BC /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	37A39053125A400A00DD86BC /* PointLong.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 552}}";
+			sepNavSelRange = "{940, 0}";
+			sepNavVisRange = "{0, 1027}";
+		};
+	};
+	37A39054125A400A00DD86BC /* PointLong.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 529}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 961}";
+		};
+	};
+	37A39055125A400A00DD86BC /* ShapePolyline.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 585}}";
+			sepNavSelRange = "{1282, 0}";
+			sepNavVisRange = "{143, 1145}";
+		};
+	};
+	37A39056125A400A00DD86BC /* ShapePolyline.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 529}}";
+			sepNavSelRange = "{785, 0}";
+			sepNavVisRange = "{0, 1160}";
+		};
+	};
+	37A39057125A400A00DD86BC /* Shapefile.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {890, 988}}";
+			sepNavSelRange = "{1275, 0}";
+			sepNavVisRange = "{1250, 884}";
+		};
+	};
+	37A39058125A400A00DD86BC /* Shapefile.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1307, 5109}}";
+			sepNavSelRange = "{8969, 0}";
+			sepNavVisRange = "{8568, 1150}";
+		};
+	};
+	37EC6ECE125AC51D009B360D /* TestObjCShapefileViewController.m:128 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 28D7ACF70DDB3853001CB0EB /* TestObjCShapefileViewController.m */;
+		functionName = "-mapView:viewForOverlay:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 128;
+		location = TestObjCShapefile;
+		modificationTime = 326496115.172094;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+	37EC6F03125AC88C009B360D /* Shapefile.m:326 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 37A39058125A400A00DD86BC /* Shapefile.m */;
+		functionName = "-parsePolyline:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 326;
+		location = TestObjCShapefile;
+		modificationTime = 326496115.172136;
+		originalNumberOfMultipleMatches = 1;
+		state = 2;
+	};
+}
