@@ -13,3 +13,5 @@
 * I've included an iOS targeted PROJ.4 framework (http://trac.osgeo.org/proj/).  To be honest, I don't know
 	where I initially found this iOS specific build.  However, I'm sure you can find another suitable
 	one for iOS floating out there somewhere if you need to.  I haven't made any changes to it.
+
+* Also, it should go without saying that if the shapefiles are already in EPSG4326 projection, then you shouldn't need Proj.4.
