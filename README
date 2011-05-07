@@ -10,7 +10,6 @@
 
 * This doesn't cover how to write or edit shapefiles, since I didn't see much utility for that in my iOS projects.
 
-* I've included an iOS targeted PROJ.4 framework.  To be honest, I don't know
-	where I initially found it.  However, I'm sure you can find another suitable
-	iOS version floating out there somewhere if you need to.  I haven't made 
-	any changes to it.
+* I've included an iOS targeted PROJ.4 framework (http://trac.osgeo.org/proj/).  To be honest, I don't know
+	where I initially found this iOS specific build.  However, I'm sure you can find another suitable
+	one for iOS floating out there somewhere if you need to.  I haven't made any changes to it.
