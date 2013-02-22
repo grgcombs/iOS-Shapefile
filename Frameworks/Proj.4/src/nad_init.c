@@ -132,7 +132,7 @@ struct CTABLE *nad_init(char *name)
     char 	fname[MAX_PATH_FILENAME+1];
     struct CTABLE *ct;
     FILE 	*fid;
-    char	header[512];
+    //char	header[512];
 
     errno = pj_errno = 0;
 

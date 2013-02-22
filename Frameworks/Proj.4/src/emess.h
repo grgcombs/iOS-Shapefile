@@ -3,7 +3,7 @@
 #define EMESS_H
 
 #ifndef lint
-static char EMESS_H_ID[] = "@(#)emess.h	4.1	93/03/08	GIE	REL";
+//static char EMESS_H_ID[] = "@(#)emess.h	4.1	93/03/08	GIE	REL";
 #endif
 
 struct EMESS {

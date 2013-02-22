@@ -85,7 +85,6 @@ int pj_transform( PJ *srcdefn, PJ *dstdefn, long point_count, int point_offset,
 
 {
     long      i;
-    int       need_datum_shift;
 
     pj_errno = 0;
 

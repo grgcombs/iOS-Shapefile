@@ -25,9 +25,13 @@
 
 #import "PointLong.h"
 
+@interface Shapefile ()
+-(void *)parsePolyline:(void *)pMain withProjection:(NSString *)projection;
+-(void *)parsePoint:(void *)pMain withProjection:(NSString *)projection;
+@end
+
 @implementation Shapefile
 @synthesize objects;
-
 @synthesize shapefileType;
 @synthesize	recordCount;
 @synthesize fileLength;
@@ -39,7 +43,6 @@
 - (void)dealloc {
 	if (m_objList)
 		[m_objList release];
-	
 	[super dealloc];
 }
 
@@ -149,7 +152,7 @@ long convertToLittleEndianLong(long Val)
 }
 
 
--(BOOL)loadShapefile:(NSString *)strShapefile;
+-(BOOL)loadShapefile:(NSString *)strShapefile withProjection:(NSString *)projection;
 {
 	
 	//NSLog(@"long = %d, double = %d NSInteger = %d", sizeof(long), sizeof(double), sizeof(NSInteger));
@@ -238,10 +241,10 @@ long convertToLittleEndianLong(long Val)
 		pMain = (void*) ((unsigned long) pMain + 4);
 		
 		if(nShapefileType == kShapeTypePoint)
-			pMain = [self parsePoint:pMain];
+			pMain = [self parsePoint:pMain withProjection:projection];
 		
 		if((nShapefileType == kShapeTypePolyline) || (nShapefileType == kShapeTypePolygon))
-			pMain = [self parsePolyline:pMain];
+			pMain = [self parsePolyline:pMain withProjection:projection];
 		
 		if(nTotalContentLength == fileLength)
 		{
@@ -260,32 +263,35 @@ long convertToLittleEndianLong(long Val)
 	return m_objList;
 }
 
-// TEXAS STATE PROJECTION
-#define EPSG3081 "+proj=lcc +lat_1=27.41666666666667 +lat_2=34.91666666666666 +lat_0=31.16666666666667 +lon_0=-100 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 
-// GOOGLE MAPS PROJECTION
-#define EPSG4326 "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+#define NAD83 "+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs"
+#define WGS1984 "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+#define DEST_PROJECTION WGS1984
 
--(void *)parsePoint:(void *)pMain
+-(void *)parsePoint:(void *)pMain withProjection:(NSString *)projection
 {
 	double nEast = 0, nNorth = 0;
 	
 	memcpy(&nEast,  (void*) ((unsigned long) pMain), 8);		// east
 	memcpy(&nNorth, (void*) ((unsigned long) pMain + 8), 8);	// north
-		
-	projPJ pj_conic = nil, pj_latlong = nil;
-	if (!(pj_conic = pj_init_plus(EPSG3081)) )
-		exit(1);
-	if (!(pj_latlong = pj_init_plus(EPSG4326)) )
-		exit(1);
 
-	pj_transform(pj_conic, pj_latlong, 1, 1, &nEast, &nNorth, NULL );
-	nEast *= RAD_TO_DEG;
-	nNorth *= RAD_TO_DEG;
-	
-	CLLocationCoordinate2D coords;
-	coords.latitude = nNorth;
-	coords.longitude = nEast;
+
+    if (projection) {
+        const char *src_projection = [projection cStringUsingEncoding:NSUTF8StringEncoding];
+
+        projPJ src_prj = nil, dest_prj = nil;
+        if (!(src_prj = pj_init_plus(src_projection)) )
+            exit(1);
+        if (!(dest_prj = pj_init_plus(DEST_PROJECTION)) )
+            exit(1);
+
+        pj_transform(src_prj, dest_prj, 1, 1, &nEast, &nNorth, NULL );
+        nEast *= RAD_TO_DEG;
+        nNorth *= RAD_TO_DEG;
+
+    }
+    	
+	CLLocationCoordinate2D coords = CLLocationCoordinate2DMake(nNorth, nEast);
 		
 	MKPlacemark *place = [[MKPlacemark alloc] initWithCoordinate:coords addressDictionary:nil];
 	[m_objList addObject:place];
@@ -298,7 +304,7 @@ long convertToLittleEndianLong(long Val)
 }
 
 
--(void *)parsePolyline:(void *)pMain
+-(void *)parsePolyline:(void *)pMain withProjection:(NSString *)projection
 {
 	
 	long i;
@@ -328,7 +334,6 @@ long convertToLittleEndianLong(long Val)
 	
 	for(i = 0; i < nNumParts; i++)
 	{
-		
 		memcpy(&nPart, (void*) (unsigned long) pMain, 4);
 		NSNumber *part = [[NSNumber alloc] initWithInt:nPart];
 		[shapePolyline->m_Parts addObject:part];
@@ -336,13 +341,18 @@ long convertToLittleEndianLong(long Val)
 	}
 	
 	CLLocationCoordinate2D *pointsCArray = calloc(nNumPoints, sizeof(CLLocationCoordinate2D));
-	
-	projPJ pj_conic = nil, pj_latlong = nil;
-	if (!(pj_conic = pj_init_plus(EPSG3081)) )
-		exit(1);
-	if (!(pj_latlong = pj_init_plus(EPSG4326)) )
-		exit(1);
-	
+
+    projPJ src_proj = nil, dest_proj = nil;
+
+    if (projection) {
+        const char *src_projection = [projection cStringUsingEncoding:NSUTF8StringEncoding];
+
+        if (!(src_proj = pj_init_plus(src_projection)) )
+            exit(1);
+        if (!(dest_proj = pj_init_plus(DEST_PROJECTION)) )
+            exit(1);
+    }
+
 	// read the elements
 	
 	for(NSInteger index = 0; index < nNumPoints; index++)
@@ -353,15 +363,13 @@ long convertToLittleEndianLong(long Val)
 		memcpy(&north, (void*) (unsigned long) pMain, 8);
 		pMain = (void*) ((unsigned long) pMain + 8);
 
-		pj_transform(pj_conic, pj_latlong, 1, 1, &east, &north, NULL );
-		east *= RAD_TO_DEG;
-		north *= RAD_TO_DEG;
-		
-		CLLocationCoordinate2D coords;
-		coords.latitude = north;
-		coords.longitude = east;
-		
-		pointsCArray[index] = coords;
+        if (src_proj && dest_proj) {
+            pj_transform(src_proj, dest_proj, 1, 1, &east, &north, NULL );
+            east *= RAD_TO_DEG;
+            north *= RAD_TO_DEG;
+        }
+
+		pointsCArray[index] = CLLocationCoordinate2DMake(north, east);
 	}
 		
 	//NSData *coordinatesData = [NSData dataWithBytes:(const void *)pointsCArray 

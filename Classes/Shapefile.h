@@ -68,9 +68,7 @@ enum ShapeTypes {
 @property (readwrite) long shapefileType;
 @property (nonatomic, readonly) NSArray *objects;
 
--(BOOL)loadShapefile:(NSString *)strShapefile;
--(void *)parsePoint:(void *)pMain;
--(void *)parsePolyline:(void *)pMain;
+-(BOOL)loadShapefile:(NSString *)strShapefile withProjection:(NSString *)projection;
 -(NSString *)shapefileTypeAsString;
 
 @end

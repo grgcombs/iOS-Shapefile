@@ -1,5 +1,5 @@
 #ifndef lint
-static char GEODESIC_H_ID[] = "@(#)geodesic.h	4.3	95/08/19	GIE	REL";
+//static char GEODESIC_H_ID[] = "@(#)geodesic.h	4.3	95/08/19	GIE	REL";
 #endif
 
 #ifdef __cplusplus

@@ -29,60 +29,37 @@
 #import "TestObjCShapefileViewController.h"
 #import "Shapefile.h"
 #import "ShapePolyline.h"
-@interface TestObjCShapefileViewController (Private)
-
-- (MKCoordinateRegion) texasRegion;
-
-@end
 
 @implementation TestObjCShapefileViewController
 @synthesize mapView;
 
 static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 
+#define STATE_TX 1
+#define STATE_NV 2
 
-/*
-// The designated initializer. Override to perform setup that is required before the view is loaded.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
+#define USE_STATE STATE_TX
 
 
+#if USE_STATE == STATE_TX
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	//self.mapView.delegate = self;
-	self.mapView.region = [self texasRegion];
+    #define SHP_FILENAME @"planS01188_8pct"
+    #define MAP_REGION MKCoordinateRegionMake((CLLocationCoordinate2D){31.709476f, -99.997559f}, (MKCoordinateSpan){10.f, 10.f})
 
-	NSString *shapePath = [[NSBundle mainBundle] pathForResource:@"planS01188_8pct" ofType:@"shp"];
-		
-	[self openShapefile:shapePath];
-}
+    // The Texas state geographer uses a special projection
+    #define EPSG3081 @"+proj=lcc +lat_1=27.41666666666667 +lat_2=34.91666666666666 +lat_0=31.16666666666667 +lon_0=-100 +x_0=1000000 +y_0=1000000 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
+    #define SRC_PROJECTION EPSG3081
+
+#elif USE_STATE == STATE_NV
+
+    #define SHP_FILENAME @"tl_2010_32_county10"
+    #define MAP_REGION MKCoordinateRegionMake((CLLocationCoordinate2D){38.395164f,-116.985512f}, (MKCoordinateSpan){7.f, 7.f})
+    #define SRC_PROJECTION nil // Use 'nil' to decline reprojection, if your source is a WSG84 or NAD83 (USGS Tiger) projection
+
+#endif
 
 #pragma mark -
 #pragma mark Properties
-
-
-- (MKCoordinateRegion) texasRegion {
-	// Set up the map's region to frame the state of Texas.
-	// Zoom = 6	
-	static CLLocationCoordinate2D texasCenter = {31.709476f, -99.997559f};
-	static MKCoordinateSpan texasSpan = {10.f, 10.f};
-	const MKCoordinateRegion txreg = MKCoordinateRegionMake(texasCenter, texasSpan);
-	return txreg;
-}
 
 - (BOOL) region:(MKCoordinateRegion)region1 isEqualTo:(MKCoordinateRegion)region2 {
 	MKMapPoint coord1 = MKMapPointForCoordinate(region1.center);
@@ -93,9 +70,20 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 	return (coordsEqual && spanEqual);
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+	//self.mapView.delegate = self;
+	self.mapView.region = MAP_REGION;
+
+	NSString *shapePath = [[NSBundle mainBundle] pathForResource:SHP_FILENAME ofType:@"shp"];
+
+	[self openShapefile:shapePath];
+}
+
 - (void)animateToState
 {    
-    [self.mapView setRegion:self.texasRegion animated:YES];
+    [self.mapView setRegion:MAP_REGION animated:YES];
 }
 
 - (void)animateToAnnotation:(id<MKAnnotation>)annotation
@@ -108,7 +96,7 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 }
 
 - (void)moveMapToAnnotation:(id<MKAnnotation>)annotation {
-	if (![self region:self.mapView.region isEqualTo:self.texasRegion]) { // it's another region, let's zoom out/in
+	if (![self region:self.mapView.region isEqualTo:MAP_REGION]) { // it's another region, let's zoom out/in
 		[self performSelector:@selector(animateToState) withObject:nil afterDelay:0.3];
 		[self performSelector:@selector(animateToAnnotation:) withObject:annotation afterDelay:1.7];        
 	}
@@ -146,13 +134,12 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 	
 	if ([overlay isKindOfClass:[MKPolygon class]])
     {		
-
-		UIColor *myColor = [UIColor greenColor];
+		UIColor *myColor = [UIColor purpleColor];
 		
 		MKPolygonView*    aView = [[[MKPolygonView alloc] initWithPolygon:(MKPolygon*)overlay] autorelease];		
 		aView.fillColor = [myColor colorWithAlphaComponent:0.2];
         aView.strokeColor = [myColor colorWithAlphaComponent:0.7];
-        aView.lineWidth = 3;
+        aView.lineWidth = 2;
 		
         return aView;
     }
@@ -162,11 +149,10 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 
 -(void)openShapefile:(NSString *)strShapefile
 {
-	
 	Shapefile *shapefile = [[Shapefile alloc] init];
 	
-	//[myView setNeedsDisplay:YES];
-	BOOL bLoad = [shapefile loadShapefile:strShapefile];
+    NSString *source_projection = SRC_PROJECTION;
+	BOOL bLoad = [shapefile loadShapefile:strShapefile withProjection:source_projection];
 	
 	if(bLoad)
 	{
@@ -178,32 +164,13 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 		if((nShapefileType == kShapeTypePolyline) || (nShapefileType == kShapeTypePolygon))
 			[self.mapView addOverlays:shapefile.objects];
 		
-		
-/*		
-		NSRect rectViewPortM;
-		rectViewPortM.origin = NSMakePoint(([shapefile extendRight] + [shapefile extendLeft]) / 2 - ([myView frame].size.height * (METERS_PER_PIXEL / 2)),
-										   ([shapefile extendTop] + [shapefile extendBottom]) / 2 - ([myView frame].size.height * (METERS_PER_PIXEL / 2)));
-		rectViewPortM.size = NSMakeSize([myView frame].size.width * METERS_PER_PIXEL, [myView frame].size.height * METERS_PER_PIXEL);
-
-		[boundingBoxLeft setIntValue:[shapefile extendLeft]];
-		[boundingBoxTop setIntValue:[shapefile extendTop]];
-		[boundingBoxRight setIntValue:[shapefile extendRight]];
-		[boundingBoxBottom setIntValue:[shapefile extendBottom]];
-		*/
-		//NSString *strFileLength = [NSString stringWithFormat:@"File length: %d bytes", [shapefile fileLength]];
-		//NSString *strRecordsCount = [NSString stringWithFormat:@"%d objects", [shapefile recordCount]];
-		
 		[self.mapView setNeedsDisplay];
 	}
 	
 	else
-		
 	{
-		
 		[shapefile release];
-		
 	}
-	
 }
 
 
