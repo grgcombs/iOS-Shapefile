@@ -37,7 +37,6 @@
 
 }
 
--(void)initMutableArray;
 @property (readwrite) long numParts;
 @property (readwrite) long numPoints;
 

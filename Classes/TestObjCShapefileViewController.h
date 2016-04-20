@@ -31,7 +31,7 @@
 @interface TestObjCShapefileViewController : UIViewController <MKMapViewDelegate> {
 }
 
-@property (nonatomic,assign) IBOutlet MKMapView *mapView;
+@property (nonatomic,weak) IBOutlet MKMapView *mapView;
 
 -(void)openShapefile:(NSString *)strShapefile;
 

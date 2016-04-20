@@ -20,15 +20,18 @@
 #import <MapKit/MapKit.h>
 @implementation ShapePolyline
 
-
 @synthesize numParts;
 @synthesize numPoints;
 
-
--(void)initMutableArray
+- (instancetype)init
 {
-	m_Parts = [[NSMutableArray alloc] init];
-	m_Points = [[NSMutableArray alloc] init];
+    self = [super init];
+    if (self)
+    {
+        m_Parts = [[NSMutableArray alloc] init];
+        m_Points = [[NSMutableArray alloc] init];
+    }
+    return self;
 }
 
 @end

@@ -19,15 +19,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import "proj_api.h"
 #import <MapKit/MapKit.h>
-
 #import "Shapefile.h"
 #import "ShapePolyline.h"
-
 #import "PointLong.h"
 
 @interface Shapefile ()
--(void *)parsePolyline:(void *)pMain withProjection:(NSString *)projection;
--(void *)parsePoint:(void *)pMain withProjection:(NSString *)projection;
+-(void *)parsePolyline:(void *)pMain withProjection:(NSString *)projection NS_RETURNS_INNER_POINTER;
+-(void *)parsePoint:(void *)pMain withProjection:(NSString *)projection NS_RETURNS_INNER_POINTER;
 @end
 
 @implementation Shapefile
@@ -40,16 +38,11 @@
 @synthesize extendRight;
 @synthesize extendBottom;
 
-- (void)dealloc {
-	if (m_objList)
-		[m_objList release];
-	[super dealloc];
-}
 
 -(NSString *)shapefileTypeAsString
 {
 	
-	NSString* strShapefileType;
+	NSString* strShapefileType = nil;
 	
 	switch(shapefileType)
 	{
@@ -125,7 +118,7 @@
 int convertToLittleEndianInteger(void* pVal)
 {
 	
-	int dwResult;
+	int dwResult = 0;
 	
 	memcpy((void*) ((unsigned long) &dwResult), (void*) ((unsigned long) pVal + 3), 1);
 	memcpy((void*) ((unsigned long) &dwResult + 1), (void*) ((unsigned long) pVal + 2), 1);
@@ -156,15 +149,12 @@ long convertToLittleEndianLong(long Val)
 {
 	
 	//NSLog(@"long = %d, double = %d NSInteger = %d", sizeof(long), sizeof(double), sizeof(NSInteger));
-	
-	if (m_objList)
-		[m_objList release];
 
 	m_objList = [[NSMutableArray alloc] init];
-	char     *pBufferShapefile;
-	void	 *pMain;
-	long     nShapefileType;	
-	long     nRecord;
+	char     *pBufferShapefile = NULL;
+	void	 *pMain = NULL;
+	long     nShapefileType = 0;
+	long     nRecord = 0;
 	long     nTotalContentLength = 100;
 	long	 nContentLength = 0;
 	
@@ -172,13 +162,13 @@ long convertToLittleEndianLong(long Val)
 	m_strShapefile = strShapefile;
 	m_data = [NSData dataWithContentsOfFile:m_strShapefile];
 	
-	pBufferShapefile = malloc([m_data length]);
-	[m_data getBytes:pBufferShapefile];
+	pBufferShapefile = malloc(m_data.length);
+	[m_data getBytes:pBufferShapefile length:m_data.length];
 	
 	pMain = &pBufferShapefile[0];
 	
 	// magic number of header block does not match (9994)
-	if(convertToLittleEndianInteger(pMain) != 0x270a)
+	if (convertToLittleEndianInteger(pMain) != 0x270a)
 	{
 		return NO;
 	}
@@ -202,7 +192,9 @@ long convertToLittleEndianLong(long Val)
 	memcpy(&nShapefileType, pMain, 4);
 	shapefileType = nShapefileType;
 	
-	if(nShapefileType != kShapeTypePoint && nShapefileType != kShapeTypePolyline && nShapefileType != kShapeTypePolygon)
+	if (nShapefileType != kShapeTypePoint
+        && nShapefileType != kShapeTypePolyline
+        && nShapefileType != kShapeTypePolygon)
 	{
 		
 		//NSRunAlertPanel(@"ShpViewer", @"Shapetype %d not yet supported!", @"OK", nil, nil, nShapefileType);
@@ -224,7 +216,6 @@ long convertToLittleEndianLong(long Val)
 	pMain = (void*) ((unsigned long) pMain + 40);
 	
 	while(nTotalContentLength <= fileLength)
-//#warning test
 	{
 		
 		memcpy(&nRecord, pMain, 4);
@@ -240,19 +231,16 @@ long convertToLittleEndianLong(long Val)
 		memcpy(&nShapefileType, pMain, 4);
 		pMain = (void*) ((unsigned long) pMain + 4);
 		
-		if(nShapefileType == kShapeTypePoint)
+		if (nShapefileType == kShapeTypePoint)
 			pMain = [self parsePoint:pMain withProjection:projection];
 		
-		if((nShapefileType == kShapeTypePolyline) || (nShapefileType == kShapeTypePolygon))
+		if ((nShapefileType == kShapeTypePolyline) || (nShapefileType == kShapeTypePolygon))
 			pMain = [self parsePolyline:pMain withProjection:projection];
 		
-		if(nTotalContentLength == fileLength)
+		if (nTotalContentLength == fileLength)
 		{
-			
 			return YES;
-			
 		}
-		
 	}
 	
 	return YES;
@@ -294,8 +282,8 @@ long convertToLittleEndianLong(long Val)
 	CLLocationCoordinate2D coords = CLLocationCoordinate2DMake(nNorth, nEast);
 		
 	MKPlacemark *place = [[MKPlacemark alloc] initWithCoordinate:coords addressDictionary:nil];
-	[m_objList addObject:place];
-	[place release];
+    if (place)
+        [m_objList addObject:place];
 	
 	pMain = (void*) ((unsigned long) pMain + 16);
 	
@@ -307,35 +295,31 @@ long convertToLittleEndianLong(long Val)
 -(void *)parsePolyline:(void *)pMain withProjection:(NSString *)projection
 {
 	
-	long i;
-	long nNumParts;
-	long nNumPoints;
-	long nPart;
-	//long nEast, nNorth;
-		
+	long i = 0;
+	long nNumParts = 0;
+	long nNumPoints = 0;
+	long nPart = 0;
+
 	ShapePolyline *shapePolyline = [[ShapePolyline alloc] init];
-	[shapePolyline initMutableArray];
-	
-	for(i = 0; i <= 3; i++)
+
+	for (i = 0; i <= 3; i++)
 	{
-		
 		memcpy(&(shapePolyline->m_nBoundingBox[i]), pMain, 8);
 		pMain = (void*) ((unsigned long) pMain + 8);
-		
 	}
 	
 	memcpy(&nNumParts, pMain, 4);
-	[shapePolyline setNumParts:nNumParts];
+	shapePolyline.numParts = nNumParts;
 	
 	pMain = (void*) ((unsigned long) pMain + 4);
 	memcpy(&nNumPoints, pMain, 4);
-	[shapePolyline setNumPoints:nNumPoints];
+	shapePolyline.numPoints = nNumPoints;
 	pMain = (void*) ((unsigned long) pMain + 4);
 	
-	for(i = 0; i < nNumParts; i++)
+	for (i = 0; i < nNumParts; i++)
 	{
 		memcpy(&nPart, (void*) (unsigned long) pMain, 4);
-		NSNumber *part = [[NSNumber alloc] initWithInt:nPart];
+		NSNumber *part = [[NSNumber alloc] initWithLong:nPart];
 		[shapePolyline->m_Parts addObject:part];
 		pMain = (void*) ((unsigned long) pMain + 4);
 	}
@@ -355,7 +339,7 @@ long convertToLittleEndianLong(long Val)
 
 	// read the elements
 	
-	for(NSInteger index = 0; index < nNumPoints; index++)
+	for (NSInteger index = 0; index < nNumPoints; index++)
 	{
 		double north = 0, east = 0;
 		memcpy(&east, (void*) (unsigned long) pMain, 8);
@@ -372,26 +356,20 @@ long convertToLittleEndianLong(long Val)
 		pointsCArray[index] = CLLocationCoordinate2DMake(north, east);
 	}
 		
-	//NSData *coordinatesData = [NSData dataWithBytes:(const void *)pointsCArray 
-	//									  length:nNumPoints*sizeof(CLLocationCoordinate2D)];
-
-	//MKPolygon *polygon=[MKPolygon polygonWithCoordinates:(CLLocationCoordinate2D *)[coordinatesData bytes] 
-	//											   count:nNumPoints];
-	MKPolygon *polygon=[MKPolygon polygonWithCoordinates:pointsCArray 
+	MKPolygon *polygon=[MKPolygon polygonWithCoordinates:pointsCArray
 												   count:nNumPoints];
 	//polygon.title = @"Title";
 	//polygon.subtitle = @"Subtitle";
 	
-	
-//---------------------------------	
-	
+
+    if (polygon)
+        [m_objList addObject:polygon];
+
 	if (pointsCArray) {
 		free(pointsCArray);
 		pointsCArray = NULL;
 	}
-	
-	[m_objList addObject:polygon];
-	
+
 	//pMain = (void*) ((unsigned long) pMain + (4 * nNumParts) + (16 * nNumPoints));
 	
 	return pMain;

@@ -1,5 +1,5 @@
 //
-//  main.m
+//  AppDelegate.h
 //  TestObjCShapefile
 //
 //  Created by Gregory Combs on 10/4/10.
@@ -27,10 +27,15 @@
 
 #import <UIKit/UIKit.h>
 
-int main(int argc, char *argv[]) {
-    
-    @autoreleasepool {
-        int retVal = UIApplicationMain(argc, argv, nil, @"AppDelegate");
-        return retVal;
-    }
+@class TestObjCShapefileViewController;
+
+@interface AppDelegate : NSObject <UIApplicationDelegate> {
+    UIWindow *window;
+    TestObjCShapefileViewController *viewController;
 }
+
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet TestObjCShapefileViewController *viewController;
+
+@end
+

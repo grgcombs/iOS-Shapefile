@@ -18,22 +18,22 @@
 
 #import <Foundation/Foundation.h>
 
-enum ShapeTypes {
-	kShapeTypeUnknown = -1,
-	kShapeTypeNull = 0,
-	kShapeTypePoint = 1,
-	kShapeTypePolyline = 3,
-	kShapeTypePolygon = 5,
-	kShapeTypeMulti = 8,
-	kShapeTypePointZ = 11,
-	kShapeTypePolylineZ = 13,
-	kShapeTypePolygonZ = 15,
-	kShapeTypeMultiZ = 18,
-	kShapeTypePointM = 21,
-	kShapeTypePolylineM = 23,
-	kShapeTypePolygonM = 25,
-	kShapeTypeMultiM = 28,
-	kShapeTypeMultiPatch = 31,
+typedef NS_ENUM(NSInteger, ShapeTypes) {
+    kShapeTypeUnknown = -1,
+    kShapeTypeNull = 0,
+    kShapeTypePoint = 1,
+    kShapeTypePolyline = 3,
+    kShapeTypePolygon = 5,
+    kShapeTypeMulti = 8,
+    kShapeTypePointZ = 11,
+    kShapeTypePolylineZ = 13,
+    kShapeTypePolygonZ = 15,
+    kShapeTypeMultiZ = 18,
+    kShapeTypePointM = 21,
+    kShapeTypePolylineM = 23,
+    kShapeTypePolygonM = 25,
+    kShapeTypeMultiM = 28,
+    kShapeTypeMultiPatch = 31,
 };
 
 @interface Shapefile : NSObject
@@ -66,9 +66,9 @@ enum ShapeTypes {
 @property (readwrite) long fileLength;
 @property (readwrite) long recordCount;
 @property (readwrite) long shapefileType;
-@property (nonatomic, readonly) NSArray *objects;
+@property (weak, nonatomic, readonly) NSArray *objects;
 
 -(BOOL)loadShapefile:(NSString *)strShapefile withProjection:(NSString *)projection;
--(NSString *)shapefileTypeAsString;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *shapefileTypeAsString;
 
 @end

@@ -46,7 +46,8 @@ extern FILE *pj_open_lib(char *, char *);
 static paralist *
 get_opt(paralist **start, FILE *fid, char *name, paralist *next) {
     char sword[302], *word = sword+1;
-    int first = 1, len, c;
+    int first = 1, c;
+    size_t len = 0;
 
     len = strlen(name);
     *sword = 't';

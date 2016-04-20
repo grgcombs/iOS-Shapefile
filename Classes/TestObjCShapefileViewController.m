@@ -31,7 +31,7 @@
 #import "ShapePolyline.h"
 
 @implementation TestObjCShapefileViewController
-@synthesize mapView;
+@synthesize mapView = _mapView;
 
 static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 
@@ -105,46 +105,26 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
 }
 
 
-
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id <MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolygon class]])
+    {
+        UIColor *myColor = [UIColor purpleColor];
 
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
+        MKPolygonRenderer * renderer = [[MKPolygonRenderer alloc] initWithPolygon:(MKPolygon*)overlay];
+        renderer.fillColor = [myColor colorWithAlphaComponent:0.2];
+        renderer.strokeColor = [myColor colorWithAlphaComponent:0.7];
+        renderer.lineWidth = 2;
 
-
-- (void)dealloc {
-	//self.mapView = nil;	// This is an "assign", not a "retain", so don't do this.  Right?
-
-    [super dealloc];
-}
-
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay{
-	
-	if ([overlay isKindOfClass:[MKPolygon class]])
-    {		
-		UIColor *myColor = [UIColor purpleColor];
-		
-		MKPolygonView*    aView = [[[MKPolygonView alloc] initWithPolygon:(MKPolygon*)overlay] autorelease];		
-		aView.fillColor = [myColor colorWithAlphaComponent:0.2];
-        aView.strokeColor = [myColor colorWithAlphaComponent:0.7];
-        aView.lineWidth = 2;
-		
-        return aView;
+        return renderer;
     }
-		
-	return nil;
+
+    return nil;
 }
 
 -(void)openShapefile:(NSString *)strShapefile
@@ -154,22 +134,17 @@ static MKCoordinateSpan kStandardZoomSpan = {2.f, 2.f};
     NSString *source_projection = SRC_PROJECTION;
 	BOOL bLoad = [shapefile loadShapefile:strShapefile withProjection:source_projection];
 	
-	if(bLoad)
+	if (bLoad)
 	{
-		long nShapefileType = [shapefile shapefileType];
+		long nShapefileType = shapefile.shapefileType;
 		
-		if(nShapefileType == kShapeTypePoint)
+		if (nShapefileType == kShapeTypePoint)
 			[self.mapView addAnnotations:shapefile.objects];
 
-		if((nShapefileType == kShapeTypePolyline) || (nShapefileType == kShapeTypePolygon))
+		if ((nShapefileType == kShapeTypePolyline) || (nShapefileType == kShapeTypePolygon))
 			[self.mapView addOverlays:shapefile.objects];
 		
 		[self.mapView setNeedsDisplay];
-	}
-	
-	else
-	{
-		[shapefile release];
 	}
 }
 

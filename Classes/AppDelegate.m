@@ -1,5 +1,5 @@
 //
-//  TestObjCShapefileAppDelegate.h
+//  AppDelegate.m
 //  TestObjCShapefile
 //
 //  Created by Gregory Combs on 10/4/10.
@@ -25,17 +25,42 @@
 //	   distribution.
 //
 
-#import <UIKit/UIKit.h>
+#import "AppDelegate.h"
+#import "TestObjCShapefileViewController.h"
 
-@class TestObjCShapefileViewController;
+@implementation AppDelegate
 
-@interface TestObjCShapefileAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-    TestObjCShapefileViewController *viewController;
+@synthesize window;
+@synthesize viewController;
+
+
+#pragma mark -
+#pragma mark Application lifecycle
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	return YES;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet TestObjCShapefileViewController *viewController;
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+}
+
+
+#pragma mark -
+#pragma mark Memory management
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+}
+
+
+
 
 @end
-
